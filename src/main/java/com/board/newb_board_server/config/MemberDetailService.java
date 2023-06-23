@@ -31,7 +31,6 @@ public class MemberDetailService implements UserDetailsService {
         MemberDTO member = getMember.orElseThrow(() -> new UsernameNotFoundException("없는 회원입니다 ㅠ"));
 
 
-        log.info("return memberInfo", member.getJoinDate());
         return User.builder()
                 .username(member.getUserid())
                 .password(member.getPasswd())

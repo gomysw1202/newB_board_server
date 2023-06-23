@@ -28,9 +28,9 @@ public class MemberService {
     }
 
     public boolean isValidMember(String userid, String password) {
-        Optional<Member> member = memberMapper.selectMember(userid);
+        Optional<MemberDTO> member = getMember(userid);
         if (member.isPresent()) {
-            return member.get().get().equals(password);
+            return member.get().getPasswd().equals(password);
         }
         return false;
     }

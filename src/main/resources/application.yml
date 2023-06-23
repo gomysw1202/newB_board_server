@@ -21,4 +21,7 @@ logging:
       newb_board_server: trace
 
 
-client.url: http://localhost:3000/
+jwt:
+  header: Authorization
+  secret: VlwEyVBsYt9V7zq57TejMnVUyzblYcfPQye08f7MGVA9XkHa
+  token-validity-in-seconds: 86400
