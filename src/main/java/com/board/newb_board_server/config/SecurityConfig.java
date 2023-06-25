@@ -1,51 +1,29 @@
 package com.board.newb_board_server.config;
 
-import com.board.newb_board_server.security.JwtAccessDeniedHandler;
-import com.board.newb_board_server.security.JwtAuthenticationEntryPoint;
-import com.board.newb_board_server.security.JwtTokenProvider;
 import jakarta.servlet.DispatcherType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import static javax.management.Query.and;
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
-@EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
 @RequiredArgsConstructor
 public class SecurityConfig {
-
-
-    private final JwtTokenProvider tokenProvider;
-    private final JwtAuthenticationEntryPoint jwtAtuthenticationEntryPoint;
-    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .cors().disable()
                 .csrf().disable()
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
                 .authorizeHttpRequests(request -> request
                         .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
                         .requestMatchers("/status", "/images/**", "/login", "/pages/Login", "/pages/SignUp", "/signUp").permitAll()
@@ -63,9 +41,6 @@ public class SecurityConfig {
 
                 )
                 .logout(withDefaults());	// 로그아웃은 기본설정으로 (/logout으로 인증해제)
-                .and()
-                .apply(new JwtSecurityConfig(tokenProvider))
-
         return http.build();
     }
 
