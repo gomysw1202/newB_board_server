@@ -1,10 +1,8 @@
 package com.board.newb_board_server.dto;
 
-import com.board.newb_board_server.config.MemberDetailService;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Getter @Setter
 public class MemberDTO {
@@ -20,7 +18,14 @@ public class MemberDTO {
     @Schema(description = "활성화")
     private int status;
 
-   /* public static MemberDTO createMember(String userid, String passwd, PasswordEncoder passwordEncoder, String email, String joinDate, int status) {
-        return new MemberDTO(userid, passwordEncoder.encode(passwd), email, joinDate, status);  }
- */
+    public MemberDTO() {
+    }
+
+    public MemberDTO(String userid, String passwd, String email, String joinDate, int status) {
+        this.userid = userid;
+        this.passwd = passwd;
+        this.email = email;
+        this.joinDate = joinDate;
+        this.status = status;
+    }
 }

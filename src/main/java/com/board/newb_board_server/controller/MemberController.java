@@ -7,13 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
-
 @Slf4j
 @RestController
 @CrossOrigin(origins ="*", allowedHeaders = "*")
 public class MemberController {
 
+    @Autowired
     private MemberService memberService;
 
     @GetMapping("/login")
@@ -26,11 +25,10 @@ public class MemberController {
         boolean isValidMember = memberService.isValidMember(dto.getUserid(), dto.getPasswd());
         if (isValidMember)
             return "dashboard";
-
+        return "login";
     }
-
     @PostMapping("/signUp")
-    public ResponseEntity<?> signUp(@RequestBody MemberDTO dto) throws IOException {
+    public ResponseEntity<?> signUp(@RequestBody MemberDTO dto){
 
         return ResponseEntity.ok(memberService.signUp(dto));
     }
