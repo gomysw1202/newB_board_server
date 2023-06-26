@@ -1,49 +1,37 @@
 package com.board.newb_board_server.controller;
 
 import com.board.newb_board_server.dto.BoardDTO;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import com.board.newb_board_server.service.BoardService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
-import java.util.Map;
+import javax.xml.transform.Result;
+import java.util.List;
 
 
-@CrossOrigin(origins ="*", allowedHeaders = "*")
-@RestController
 @Slf4j
+@CrossOrigin(origins ="*", allowedHeaders = "*")
+@RequiredArgsConstructor
+@RestController
 public class BoardController {
-//    private final Logger log = LoggerFactory.getLogger(getClass());
 
-//
-//    @RequestMapping("/")
-//    public String index() {
-//
-//        return " ";
-//    }
-//    @RequestMapping("/log-test")
-//    public String logTest() {
-//        String name = "Spring";
-//
-//        System.out.println("name = " + name);
-//        log.trace(" trace log={}", name);
-//        log.debug(" debug log={}", name);
-//        log.info("  info log={}", name);
-//        log.warn("  warn log={}", name);
-//        log.error(" error log={}", name);
-//
-//        return "ok";
-//    }
-//
-//
-//    /*
-//    *   PathVariable 경로 변수 사용
-//    *   게시판 상세보기 할 때 사용할 것!
-//    * */
+    @Autowired
+    private final BoardService boardService;
+
+    @GetMapping("/boardList")
+    public ResponseEntity<List<BoardDTO>> getBoardList() {
+        List<BoardDTO> list = boardService.getBoardList();
+        return ResponseEntity.ok().body(list);
+    }
+
+    /*
+    *   PathVariable 경로 변수 사용
+    *   게시판 상세보기 할 때 사용할 것!
+    * */
 //    @GetMapping("/board/{boardNum}")
 ////    public String getBoardDetail (@PathVariable String boardNum) { // 이렇게도 사용가능하다네요 통일 시켜서
 //    public String getBoardDetail (@PathVariable("boardNum") String data) {

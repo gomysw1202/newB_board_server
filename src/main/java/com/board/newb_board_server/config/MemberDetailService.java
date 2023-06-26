@@ -3,7 +3,6 @@ package com.board.newb_board_server.config;
 import com.board.newb_board_server.dto.MemberDTO;
 import com.board.newb_board_server.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,7 +21,6 @@ public class MemberDetailService implements UserDetailsService {
         this.memberService = memberService;
     }
 
-    @Override
     public UserDetails loadUserByUsername(String insertedUserid) throws UsernameNotFoundException {
 
         log.info("aksgpjioajgiongoqnjgonqogioqgiqjigjqogjqiojgioqgjiqegnjdnvjdap");
@@ -37,3 +35,4 @@ public class MemberDetailService implements UserDetailsService {
                 .build();
     }
 }
+

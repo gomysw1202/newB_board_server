@@ -3,6 +3,7 @@ package com.board.newb_board_server.dto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Getter @Setter
 public class MemberDTO {
@@ -27,5 +28,9 @@ public class MemberDTO {
         this.email = email;
         this.joinDate = joinDate;
         this.status = status;
+    }
+
+    public static MemberDTO memberSignUp(String userid, String passwd, PasswordEncoder passwordEncoder, String email, String joinDate, int status) {
+        return new MemberDTO(userid, passwordEncoder.encode(passwd), email, joinDate, 1);
     }
 }

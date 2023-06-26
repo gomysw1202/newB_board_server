@@ -1,14 +1,29 @@
 package com.board.newb_board_server.dto;
 
 
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class BoardDTO {
-    private String userid;
-    private String passwd;
-    private String email;
-    private String join_date;
-    private Integer status;
+
+    private int boardNum;
+
+    private String fkUserid;
+    private String title;
+    private String content;
+    private String writeDate;
+    private int views;
+    private int status;
+    private int open;
+
+
 }
+
+
+
+
 
