@@ -30,7 +30,9 @@ public class MemberDTO {
         this.status = status;
     }
 
-    public static MemberDTO memberSignUp(String userid, String passwd, PasswordEncoder passwordEncoder, String email, String joinDate, int status) {
-        return new MemberDTO(userid, passwordEncoder.encode(passwd), email, joinDate, 1);
+    public MemberDTO EncodePasswd(PasswordEncoder passwordEncoder) {
+        this.passwd = passwordEncoder.encode(this.passwd);
+        return this;
     }
+
 }

@@ -24,9 +24,13 @@ public class BoardController {
 
     @GetMapping("/boardList")
     public ResponseEntity<List<BoardDTO>> getBoardList() {
+
         List<BoardDTO> list = boardService.getBoardList();
         return ResponseEntity.ok().body(list);
     }
+
+
+
 
     /*
     *   PathVariable 경로 변수 사용
