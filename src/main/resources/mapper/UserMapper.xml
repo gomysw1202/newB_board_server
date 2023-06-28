@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.board.newb_board_server.mapper.UserMapper">
+
+
+    <select id="isExistUserid" parameterType="String" resultType="boolean">
+        SELECT if(count(*) = 1,1,0) FROM TBL_USER WHERE USERID = #{userid}
+    </select>
+
+    <insert id="insertUser" parameterType="com.board.newb_board_server.dto.UserDTO">
+        INSERT INTO TBL_USER (USERID, PASSWD, EMAIL, JOIN_DATE, STATUS ) VALUE (#{userid}, #{passwd}, #{email}, default, #{status})
+    </insert>
+
+
+    <select id="getUserDetails" parameterType="String" resultType="com.board.newb_board_server.dto.UserDTO">
+        SELECT USERID, PASSWD, EMAIL, JOIN_DATE, STATUS FROM TBL_USER WHERE USERID = #{userid}
+    </select>
+
+</mapper>

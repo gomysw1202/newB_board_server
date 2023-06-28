@@ -1,6 +1,8 @@
 package com.board.newb_board_server.config;
 
+import com.board.newb_board_server.service.CustomUserDetailsService;
 import jakarta.servlet.DispatcherType;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -14,6 +16,9 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @Configuration
 @EnableMethodSecurity
 public class SecurityConfig {
+//
+//    @Autowired
+//    private CustomUserDetailsService customUserDetailsService;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -25,14 +30,14 @@ public class SecurityConfig {
         http.csrf().disable().cors().disable()
                 .authorizeHttpRequests(request -> request
                                 .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
-                                .requestMatchers("/status", "/images/**", "/login", "/pages/Login", "/pages/SignUp", "/signUp" ).permitAll()
+                                .requestMatchers("/status", "/images/**", "/login", "/signUp" ).permitAll()
                                 .anyRequest()
 //                                .anonymous() // 일단 테스트라서 어노니머스로 설정해놓음
                                 .authenticated()	// 어떠한 요청이라도 인증필요
                 )
                 .formLogin(login -> login	// form 방식 로그인 사용
-                                .loginPage("http://localhost:3000/login")	// [A] 커스텀 로그인 페이지 지정
-//                                .loginProcessingUrl("/login-process")	// [B] submit 받을 url
+//                                .loginPage("http://localhost:3000/login")	// [A] 커스텀 로그인 페이지 지정
+                                .loginProcessingUrl("/login")	// [B] submit 받을 url
                                 .usernameParameter("userid")	// [C] submit할 아이디
                                 .passwordParameter("passwd")	// [D] submit할 비밀번호
                                 .defaultSuccessUrl("/main", true)
