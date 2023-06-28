@@ -6,5 +6,16 @@
         SELECT board_num, fk_userid, title, content, write_date, views, status FROM TBL_BOARD
     </select>
 
+    <select id="getBoardDetail" parameterType="String" resultType="com.board.newb_board_server.dto.BoardDTO">
+        SELECT board_num, fk_userid, title, content, write_date, views, status FROM TBL_BOARD WHERE BOARD_NUM = #{boardNum}
+    </select>
 
+
+    <insert id="insertBoard" parameterType="com.board.newb_board_server.dto.BoardDTO">
+        INSERT INTO TBL_BOARD (board_num, fk_userid, title, content, write_date, views, status) VALUES (nextval(seq_boardNum), 'limsw', #{title}, #{content}, default, default, default)
+    </insert>
+
+    <update id="modifyBoard" parameterType="String">
+        UPDATE TBL_BOARD SET board_num = #{boardNum}, fk_userid = 'limsw', title = #{title}, content = #{content}
+    </update>
 </mapper>

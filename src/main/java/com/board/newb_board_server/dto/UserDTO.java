@@ -3,7 +3,7 @@ package com.board.newb_board_server.dto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.security.crypto.password.PasswordEncoder;
+//import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Getter
 @Setter
@@ -31,9 +31,9 @@ public class UserDTO {
             this.status = status;
         }
 
-        public UserDTO EncodePasswd(PasswordEncoder passwordEncoder) {
-            this.passwd = passwordEncoder.encode(this.passwd);
-            return this;
-        }
+//        public UserDTO EncodePasswd(PasswordEncoder passwordEncoder) {
+//            this.passwd = passwordEncoder.encode(this.passwd);
+//            return this;
+//        }
 
 }

@@ -9,4 +9,12 @@ import java.util.Optional;
 @Mapper
 public interface BoardMapper {
     List<BoardDTO> getBoardList();
+
+    BoardDTO getBoardDetail(String data);
+
+    // 글 등록
+    int insertBoard(BoardDTO dto);
+
+    // 글 수정
+    int modifyBoard(String data);
 }
