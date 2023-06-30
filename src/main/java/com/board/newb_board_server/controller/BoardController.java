@@ -42,20 +42,21 @@ public class BoardController {
     }
 
 
-
-//    @PutMapping("/write/{boardNum}")
-//    public ResponseEntity<?> modifyBoard(@PathVariable("boardNum") String data) {
-//        return ResponseEntity.ok().body(boardService.modiftyBoard(data));
-//    }
-
-
-
-
     @PostMapping("/write")
     public ResponseEntity<?> insertBoard (@RequestBody BoardDTO dto) {
         return ResponseEntity.ok().body(boardService.insertBoard(dto));
     }
 
 
+    @PatchMapping("/modify")
+    public ResponseEntity<?> modifyBoard(@RequestBody BoardDTO dto) {
+        return ResponseEntity.ok().body(boardService.modiftyBoard(dto));
+    }
+
+
+    @DeleteMapping("/delete/{boardNum}")
+    public ResponseEntity<?> deleteBoard (@PathVariable("boardNum") String data) {
+        return ResponseEntity.ok().body(boardService.deleteBoard(data));
+    }
 
 }

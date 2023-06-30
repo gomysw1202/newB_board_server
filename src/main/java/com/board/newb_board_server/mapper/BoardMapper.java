@@ -16,5 +16,11 @@ public interface BoardMapper {
     int insertBoard(BoardDTO dto);
 
     // 글 수정
-    int modifyBoard(String data);
+    int modifyBoard(BoardDTO dto);
+
+    // 글 삭제
+    int deleteBoard(String data);
+
+    int updateViews(String data);
+
 }

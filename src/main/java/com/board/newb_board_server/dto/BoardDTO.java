@@ -11,13 +11,12 @@ import lombok.*;
 public class BoardDTO {
 
     private int boardNum;
-
     private String fkUserid;
     private String title;
     private String content;
     private String writeDate;
     private int views;
-    private int status;
+    private String  del;
     private int open;
 
 

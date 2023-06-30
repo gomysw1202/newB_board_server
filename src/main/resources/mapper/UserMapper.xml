@@ -8,12 +8,12 @@
     </select>
 
     <insert id="insertUser" parameterType="com.board.newb_board_server.dto.UserDTO">
-        INSERT INTO TBL_USER (USERID, PASSWD, EMAIL, JOIN_DATE, STATUS ) VALUE (#{userid}, #{passwd}, #{email}, default, #{status})
+        INSERT INTO TBL_USER (USERID, PASSWD, EMAIL, JOIN_DATE, DEL ) VALUE (#{userid}, #{passwd}, #{email}, default, #{status})
     </insert>
 
 
     <select id="getUserDetails" parameterType="String" resultType="com.board.newb_board_server.dto.UserDTO">
-        SELECT USERID, PASSWD, EMAIL, JOIN_DATE, STATUS FROM TBL_USER WHERE USERID = #{userid}
+        SELECT USERID, PASSWD, EMAIL, JOIN_DATE, DEL FROM TBL_USER WHERE USERID = #{userid}
     </select>
 
 </mapper>

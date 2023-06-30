@@ -15,13 +15,16 @@ import java.util.Optional;
 public class BoardService {
 
     private final BoardMapper boardMapper;
-    // 게시글 상세 글 가지고 오기
-    public BoardDTO getBoardDetail(String data) {
-        return boardMapper.getBoardDetail(data);
-    }
-
+    // 게시물 리스트 가져오기
     public List<BoardDTO> getBoardList() {
         return boardMapper.getBoardList();
+    }
+
+    // 게시글 상세 글 가져오기
+    public BoardDTO getBoardDetail(String data) {
+        boardMapper.updateViews(data); // 조회수 증가
+        return boardMapper.getBoardDetail(data);
+
     }
 
     // 글 등록
@@ -29,7 +32,12 @@ public class BoardService {
         return boardMapper.insertBoard(dto);
     }
 
-    public int modiftyBoard(String data) {
-        return boardMapper.modifyBoard(data);
+    public int modiftyBoard(BoardDTO dto) {
+        return boardMapper.modifyBoard(dto);
+    }
+
+    // 글 삭제
+    public int deleteBoard(String data) {
+        return boardMapper.deleteBoard(data);
     }
 }
