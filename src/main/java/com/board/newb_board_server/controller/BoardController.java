@@ -3,6 +3,7 @@ package com.board.newb_board_server.controller;
 import com.board.newb_board_server.dto.BoardDTO;
 import com.board.newb_board_server.dto.UserDTO;
 import com.board.newb_board_server.service.BoardService;
+import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +24,11 @@ public class BoardController {
     private final BoardService boardService;
 
     @GetMapping("/list")
-    public ResponseEntity<List<BoardDTO>> getBoardList() {
-//        List<BoardDTO> boardList = boardService.getBoardList();
+    public ResponseEntity<List<BoardDTO>> getBoardList(@RequestParam @Nullable String fkUserid) {
 
-        return ResponseEntity.ok().body(boardService.getBoardList());
+        return ResponseEntity.ok().body(boardService.getBoardList(fkUserid));
     }
+
 
     /*
     *   PathVariable 경로 변수 사용
@@ -54,9 +55,9 @@ public class BoardController {
     }
 
 
-    @DeleteMapping("/delete/{boardNum}")
-    public ResponseEntity<?> deleteBoard (@PathVariable("boardNum") String data) {
-        return ResponseEntity.ok().body(boardService.deleteBoard(data));
+    @PatchMapping("/delete/{boardNum}")
+    public ResponseEntity<?> deleteBoard (@PathVariable("boardNum") String boardNum) {
+        return ResponseEntity.ok().body(boardService.setDelYN(boardNum));
     }
 
 }

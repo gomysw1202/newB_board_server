@@ -15,20 +15,26 @@ public class CommentService {
 
     private final CommentMapper commentMapper;
 
-    public List<CommentDTO> getCommentList(String data) {
-        return commentMapper.getCommentList(data);
+    public List<CommentDTO> getCommentList(String fkBoardNum) {
+        return commentMapper.getCommentList(fkBoardNum);
     }
 
+    public List<CommentDTO> getCommentListByFkUserid(String fkUserid) {
+        return commentMapper.getCommentListByFkUserid(fkUserid);
+    }
 
     public int insertComment(CommentDTO dto) {
         return commentMapper.insertComment(dto);
     }
 
-    public int deleteComment(String data) {
-        return commentMapper.deleteComment(data);
+    public int setDelYN(int commentNum) {
+        return commentMapper.setDelYN(commentNum);
     }
 
     public int modifyComment(CommentDTO dto) {
         return commentMapper.modifyComment(dto);
     }
+
+
+    public int updateOpenYN(int commentNum) { return commentMapper.updateOpenYN(commentNum); }
 }

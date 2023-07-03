@@ -8,7 +8,7 @@ import java.util.Optional;
 
 @Mapper
 public interface BoardMapper {
-    List<BoardDTO> getBoardList();
+    List<BoardDTO> getBoardList(String fkUserid);
 
     BoardDTO getBoardDetail(String data);
 
@@ -19,7 +19,7 @@ public interface BoardMapper {
     int modifyBoard(BoardDTO dto);
 
     // 글 삭제
-    int deleteBoard(String data);
+    int setDelYN(String data);
 
     int updateViews(String data);
 

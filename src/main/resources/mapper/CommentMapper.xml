@@ -3,8 +3,17 @@
 <mapper namespace="com.board.newb_board_server.mapper.CommentMapper">
 
     <select id="getCommentList" parameterType="String" resultType="com.board.newb_board_server.dto.CommentDTO">
-        SELECT COMMENT_NUM, FK_BOARD_NUM, CONTENT, FK_USERID, WRITE_DATE FROM TBL_COMMENT WHERE FK_BOARD_NUM = #{fkBoardNum}
+        SELECT COMMENT_NUM, FK_BOARD_NUM, CONTENT, FK_USERID, WRITE_DATE
+        FROM TBL_COMMENT
+        WHERE FK_BOARD_NUM = #{fkBoardNum} AND DEL = 'N'
     </select>
+
+    <select id="getCommentListByFkUserid" parameterType="String" resultType="com.board.newb_board_server.dto.CommentDTO">
+        SELECT COMMENT_NUM, FK_BOARD_NUM, CONTENT, FK_USERID, WRITE_DATE, OPEN
+        FROM TBL_COMMENT
+        WHERE FK_USERID = #{fkUserid} AND DEL = 'N'
+    </select>
+
 
     <insert id="insertComment" parameterType="com.board.newb_board_server.dto.CommentDTO">
         INSERT INTO TBL_COMMENT (COMMENT_NUM, FK_BOARD_NUM, CONTENT, FK_USERID) VALUES (nextval(seq_commentNum), #{fkBoardNum}, #{content}, #{fkUserid})
@@ -14,8 +23,12 @@
         UPDATE TBL_COMMENT SET CONTENT = #{content} WHERE COMMENT_NUM = #{commentNum}
     </update>
 
-    <delete id="deleteComment" parameterType="String">
-        DELETE FROM TBL_COMMENT WHERE COMMENT_NUM = #{commentNum}
-    </delete>
+    <update id="setDelYN" parameterType="int">
+        UPDATE TBL_COMMENT SET DEL = 'Y' WHERE COMMENT_NUM = #{commentNum}
+    </update>
+
+    <update id="updateOpenYN" parameterType="int">
+        UPDATE TBL_COMMENT SET OPEN = 'Y' WHERE COMMENT_NUM = #{commentNum}
+    </update>
 
 </mapper>

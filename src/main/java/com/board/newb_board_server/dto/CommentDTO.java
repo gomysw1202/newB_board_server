@@ -3,11 +3,12 @@ package com.board.newb_board_server.dto;
 import lombok.*;
 import org.apache.ibatis.annotations.Mapper;
 
-@Getter
-@Setter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
+//@Getter
+//@Setter
+//@Builder
+//@NoArgsConstructor
+//@AllArgsConstructor
+@Data
 public class CommentDTO {
 
     private int commentNum; // 댓글번호
@@ -16,7 +17,7 @@ public class CommentDTO {
     private int fkCommentNum; // 원댓글
     private String fkUserid; // 작성자
     private String writeDate; // 작성일자
-    private int open;
+    private String open;
     private int commentLevel; // 댓글(0) 대댓글(1)
     private String del; // 삭제(Y) 미삭제(N)
 

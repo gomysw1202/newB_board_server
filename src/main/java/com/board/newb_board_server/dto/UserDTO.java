@@ -1,14 +1,19 @@
 package com.board.newb_board_server.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.Collection;
 //import org.springframework.security.crypto.password.PasswordEncoder;
 
-@Getter
-@Setter
-public class UserDTO {
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class UserDTO implements UserDetails {
 
         private String userid;
         private String passwd;
@@ -16,16 +21,41 @@ public class UserDTO {
         private String joinDate;
         private String del;
 
-        public UserDTO() {
+        @Override
+        public Collection<? extends GrantedAuthority> getAuthorities() {
+                return null;
         }
 
-        public UserDTO(String userid, String passwd, String email, String joinDate, String del) {
-            this.userid = userid;
-            this.passwd = passwd;
-            this.email = email;
-            this.joinDate = joinDate;
-            this.del = del;
+        @Override
+        public String getPassword() {
+                return passwd;
         }
+
+        @Override
+        public String getUsername() {
+                return userid;
+        }
+
+        @Override
+        public boolean isAccountNonExpired() {
+                return true;
+        }
+
+        @Override
+        public boolean isAccountNonLocked() {
+                return true;
+        }
+
+        @Override
+        public boolean isCredentialsNonExpired() {
+                return true;
+        }
+
+        @Override
+        public boolean isEnabled() {
+                return true;
+        }
+
 
 //        public UserDTO EncodePasswd(PasswordEncoder passwordEncoder) {
 //            this.passwd = passwordEncoder.encode(this.passwd);

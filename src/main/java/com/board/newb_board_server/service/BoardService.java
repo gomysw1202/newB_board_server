@@ -16,8 +16,8 @@ public class BoardService {
 
     private final BoardMapper boardMapper;
     // 게시물 리스트 가져오기
-    public List<BoardDTO> getBoardList() {
-        return boardMapper.getBoardList();
+    public List<BoardDTO> getBoardList(String fkUserid) {
+        return boardMapper.getBoardList(fkUserid);
     }
 
     // 게시글 상세 글 가져오기
@@ -36,8 +36,8 @@ public class BoardService {
         return boardMapper.modifyBoard(dto);
     }
 
-    // 글 삭제
-    public int deleteBoard(String data) {
-        return boardMapper.deleteBoard(data);
+    // 글 삭제(DEL 컬럼 값을 Y로 변경)
+    public int setDelYN(String boardNum) {
+        return boardMapper.setDelYN(boardNum);
     }
 }

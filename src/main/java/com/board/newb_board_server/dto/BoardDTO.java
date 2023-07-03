@@ -3,11 +3,7 @@ package com.board.newb_board_server.dto;
 
 import lombok.*;
 
-@Getter
-@Setter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
 public class BoardDTO {
 
     private int boardNum;
@@ -17,7 +13,10 @@ public class BoardDTO {
     private String writeDate;
     private int views;
     private String  del;
-    private int open;
+    private String open;
+
+    // 댓글 수를 가져오기 위한 것
+    private int commentCnt;
 
 
 }

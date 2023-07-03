@@ -8,7 +8,10 @@
     </select>
 
     <insert id="insertUser" parameterType="com.board.newb_board_server.dto.UserDTO">
-        INSERT INTO TBL_USER (USERID, PASSWD, EMAIL, JOIN_DATE, DEL ) VALUE (#{userid}, #{passwd}, #{email}, default, #{status})
+            INSERT INTO TBL_USER (USERID, PASSWD, EMAIL, JOIN_DATE, DEL ) VALUE (#{userid}, #{passwd}, #{email}, default, #{status})
+        <selectKey resultType="com.board.newb_board_server.dto.UserDTO" keyProperty="userid" keyColumn="USERID" order="AFTER">
+            SELECT USERID FROM TBL_USER
+        </selectKey>
     </insert>
 
 

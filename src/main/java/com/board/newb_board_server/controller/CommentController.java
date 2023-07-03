@@ -1,8 +1,8 @@
 package com.board.newb_board_server.controller;
 
-import com.board.newb_board_server.dto.BoardDTO;
 import com.board.newb_board_server.dto.CommentDTO;
 import com.board.newb_board_server.service.CommentService;
+import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +22,16 @@ public class CommentController {
     private final CommentService commentService;
 
     @GetMapping("/list/{fkBoardNum}")
-    public ResponseEntity<List<CommentDTO>> getCommentList(@PathVariable("fkBoardNum") String data) {
-        log.info("mappingPath fkBoardNum={}", data);
-        return ResponseEntity.ok().body(commentService.getCommentList(data));
+    public ResponseEntity<List<CommentDTO>> getCommentList(@PathVariable("fkBoardNum") String fkBoardNum) {
+        log.info("mappingPath fkBoardNum={}", fkBoardNum);
+        return ResponseEntity.ok().body(commentService.getCommentList(fkBoardNum));
+    }
+
+
+    @GetMapping("/list")
+    public ResponseEntity<List<CommentDTO>> getCommentListByFkUserid(@RequestParam @Nullable String fkUserid) {
+        log.info("mappingPath fkBoardNum={}", fkUserid);
+        return ResponseEntity.ok().body(commentService.getCommentListByFkUserid(fkUserid));
     }
 
     @PostMapping("/write")
@@ -37,8 +44,13 @@ public class CommentController {
         return ResponseEntity.ok().body(commentService.modifyComment(dto));
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<?> deleteComment (@RequestParam String data) {
-        return ResponseEntity.ok().body(commentService.deleteComment(data));
+    @PatchMapping("/delete")
+    public ResponseEntity<?> deleteComment (@RequestParam int commentNum) {
+        return ResponseEntity.ok().body(commentService.setDelYN(commentNum));
+    }
+
+    @PatchMapping("/updateOpenYN")
+    public ResponseEntity<?> updateOpenYN(@RequestBody int commentNum) {
+        return ResponseEntity.ok().body(commentService.updateOpenYN(commentNum));
     }
 }
