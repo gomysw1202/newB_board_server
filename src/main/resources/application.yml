@@ -8,10 +8,7 @@ spring:
     hiddenmethod:
       filter:
         enabled: true
-  security:
-    user:
-      name: limsw
-      password: 1234
+
 
 
 mybatis:
@@ -28,7 +25,3 @@ logging:
       newb_board_server: trace
 
 
-jwt:
-  header: Authorization
-  secret: VlwEyVBsYt9V7zq57TejMnVUyzblYcfPQye08f7MGVA9XkHa
-  token-validity-in-seconds: 86400

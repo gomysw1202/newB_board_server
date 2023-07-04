@@ -8,6 +8,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,8 +28,11 @@ public class BoardController {
     private final BoardService boardService;
 
     @GetMapping("/list")
-    public ResponseEntity<List<BoardDTO>> getBoardList(@RequestParam @Nullable String fkUserid) {
+    public ResponseEntity<List<BoardDTO>> getBoardList(@AuthenticationPrincipal UserDTO dto) {
 
+        String fkUserid = dto.getUserid();
+
+        log.info("여기는 보드 리스트 입니다~!@!~!@~!@~!@~!@~!$#~!" +fkUserid);
         return ResponseEntity.ok().body(boardService.getBoardList(fkUserid));
     }
 
