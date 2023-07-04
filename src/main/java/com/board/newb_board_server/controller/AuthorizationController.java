@@ -1,5 +1,8 @@
 package com.board.newb_board_server.controller;
 
+import com.board.newb_board_server.auth.AuthenticationRequest;
+import com.board.newb_board_server.auth.AuthenticationResponse;
+import com.board.newb_board_server.auth.RegisterRequest;
 import com.board.newb_board_server.dto.UserDTO;
 import com.board.newb_board_server.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
@@ -15,21 +18,17 @@ public class AuthorizationController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/signUp")
-    public ResponseEntity<?> signUp(@RequestBody UserDTO dto){
-        try{
-            return ResponseEntity.ok(authenticationService.insertUser(dto));
-        }catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+    public ResponseEntity<AuthenticationResponse> signUp(@RequestBody RegisterRequest request){
+            return ResponseEntity.ok(authenticationService.insertUser(request));
     }
 
 
 
     @PostMapping("/login")
-    public ResponseEntity<?> authenticate(
-            @RequestBody UserDTO dto
+    public ResponseEntity<AuthenticationResponse> authenticate(
+            @RequestBody AuthenticationRequest request
     ) {
-        return ResponseEntity.ok(authenticationService.authenticate(dto));
+        return ResponseEntity.ok(authenticationService.authenticate(request));
     }
 
 

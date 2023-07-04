@@ -1,7 +1,11 @@
 package com.board.newb_board_server.service;
 
+import com.board.newb_board_server.auth.AuthenticationRequest;
+import com.board.newb_board_server.auth.AuthenticationResponse;
+import com.board.newb_board_server.auth.RegisterRequest;
 import com.board.newb_board_server.dto.UserDTO;
 import com.board.newb_board_server.mapper.UserMapper;
+import com.board.newb_board_server.security.JwtService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,22 +22,27 @@ public class AuthenticationService {
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
-    public UserDTO insertUser(UserDTO dto) {
+    private final JwtService jwtService;
+    public AuthenticationResponse insertUser(RegisterRequest request) {
         var user = UserDTO.builder()
-                .userid(dto.getUserid())
-                .passwd(passwordEncoder.encode(dto.getPasswd()))
-                .email(dto.getEmail())
+                .userid(request.getUserid())
+                .passwd(passwordEncoder.encode(request.getPasswd()))
+                .email(request.getEmail())
                 .build();
-        int result = userMapper.insertUser(user);
-        return UserDTO.builder()
+        userMapper.insertUser(user);
+        var jwtToken = jwtService.generateToken(user);
+        return AuthenticationResponse.builder()
+                .token(jwtToken)
                 .build();
     }
 
-    public UserDTO authenticate(UserDTO dto) {
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(dto.getUserid(),dto.getPasswd()));
-        dto = userMapper.getUserDetails(dto.getUserid())
+    public AuthenticationResponse authenticate(AuthenticationRequest request) {
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUserid(),request.getPasswd()));
+        var user = userMapper.getUserDetails(request.getUserid())
                 .orElseThrow();
-        return UserDTO.builder()
+        var jwtToken = jwtService.generateToken(user);
+        return AuthenticationResponse.builder()
+                .token(jwtToken)
                 .build();
     }
 

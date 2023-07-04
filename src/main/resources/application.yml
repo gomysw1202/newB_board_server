@@ -9,8 +9,6 @@ spring:
       filter:
         enabled: true
 
-
-
 mybatis:
   type-aliases-package: com.board.newb_board_server
   configuration:
@@ -24,4 +22,5 @@ logging:
     board:
       newb_board_server: trace
 
-
+jwt:
+  secret: VlwEyVBsYt9V7zq57TejMnVUyewkrqwekkeWERkdfksazblYcfPQye08f7MGEWRweVA9XkHa
