@@ -49,4 +49,9 @@ public class AuthorizationController {
         authenticationService.refreshToken(request, response);
     }
 
+
+    @GetMapping("test")
+    public String test() {
+        return "hello world";
+    }
 }

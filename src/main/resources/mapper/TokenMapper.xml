@@ -13,6 +13,12 @@
         WHERE U.USERID = #{fkUserid} AND (T.EXPIRED = 'FALSE' OR T.REVOKED = 'FALSE')
     </select>
 
+    <select id="findByToken" parameterType="String" resultType="com.board.newb_board_server.dto.TokenDTO">
+        SELECT FK_USERID, TOKEN, TOKEN_TYPE, REVOKED, EXPIRED FROM TBL_TOKEN
+        WHERE TOKEN = #{token}
+
+    </select>
+
     <update id="updateExpiredRevoked" parameterType="java.util.List">
         <foreach collection="list" item="item" >
             UPDATE TBL_TOKEN
