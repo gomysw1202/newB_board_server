@@ -22,5 +22,10 @@ logging:
     board:
       newb_board_server: trace
 
-jwt:
-  secret: VlwEyVBsYt9V7zq57TejMnVUyewkrqwekkeWERkdfksazblYcfPQye08f7MGEWRweVA9XkHa
+application:
+  security:
+    jwt:
+      secret-key: VlwEyVBsYt9V7zq57TejMnVUyewkrqwekkeWERkdfksazblYcfPQye08f7MGEWRweVA9XkHa
+      expiration: 86400000 # a day
+      refresh-token:
+        expiration: 604800000 # 7 days

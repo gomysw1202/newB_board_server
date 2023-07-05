@@ -1,5 +1,6 @@
 package com.board.newb_board_server.security;
 
+import com.board.newb_board_server.mapper.TokenMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,6 +24,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
+    private final TokenMapper tokenMapper;
     @Override
     protected void doFilterInternal(
             @NonNull HttpServletRequest request,
@@ -43,7 +45,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         userid = jwtService.extractUsername(jwt);
         if (userid != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(userid);
-            if (jwtService.isTokenValid(jwt, userDetails)) {
+            var isTokenValid = tokenMapper.findByToken(jwt)
+                    .map(t -> !t.isExpired() && !t.isRevoked())
+                    .orElse(false);
+            if (jwtService.isTokenValid(jwt, userDetails) && isTokenValid) {
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails,
                         null,

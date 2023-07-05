@@ -12,7 +12,7 @@ public interface UserMapper {
     boolean isExistUserid(String userid);
 
     // 회원가입시 정보 입력하기
-    int insertUser(UserDTO dto);
+    UserDTO insertUser(UserDTO dto);
 
     // 유저 정보 가져오기
     Optional<UserDTO> getUserDetails(String userid);

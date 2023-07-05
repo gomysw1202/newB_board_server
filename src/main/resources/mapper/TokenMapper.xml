@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.board.newb_board_server.mapper.TokenMapper">
+
+    <insert id="save" parameterType="com.board.newb_board_server.dto.TokenDTO">
+       INSERT INTO TBL_TOKEN (FK_USERID, TOKEN, TOKEN_TYPE, REVOKED, EXPIRED)
+       VALUES (#{fkUserid}, #{token}, #{tokenType}, #{revoked}, #{expired})
+    </insert>
+
+
+    <select id="findAllValidTokenByUser" resultType="com.board.newb_board_server.dto.TokenDTO">
+        SELECT T.FK_USERID, T.TOKEN, T.TOKEN_TYPE, T.REVOKED, T.EXPIRED FROM TBL_TOKEN T INNER JOIN TBL_USER U
+        WHERE U.USERID = #{fkUserid} AND (T.EXPIRED = 'FALSE' OR T.REVOKED = 'FALSE')
+    </select>
+
+    <update id="updateExpiredRevoked" parameterType="java.util.List">
+        <foreach collection="list" item="item" >
+            UPDATE TBL_TOKEN
+            SET EXPIRED = #{item.expired}
+            , REVOKED = #{item.revoked}
+            WHERE FK_USERID = #{item.fkUserid}
+        </foreach>
+    </update>
+
+</mapper>

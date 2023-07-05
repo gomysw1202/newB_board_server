@@ -5,10 +5,14 @@ import com.board.newb_board_server.auth.AuthenticationResponse;
 import com.board.newb_board_server.auth.RegisterRequest;
 import com.board.newb_board_server.dto.UserDTO;
 import com.board.newb_board_server.service.AuthenticationService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,7 +25,6 @@ public class AuthorizationController {
     public ResponseEntity<AuthenticationResponse> signUp(@RequestBody RegisterRequest request){
             return ResponseEntity.ok(authenticationService.insertUser(request));
     }
-
 
 
     @PostMapping("/login")
@@ -37,4 +40,13 @@ public class AuthorizationController {
         return ResponseEntity.ok("HELLO");
 
     }
+
+    @PostMapping("/refresh-token")
+    public void refreshToken(
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) throws IOException {
+        authenticationService.refreshToken(request, response);
+    }
+
 }
