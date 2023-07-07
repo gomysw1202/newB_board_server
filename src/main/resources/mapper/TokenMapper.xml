@@ -8,23 +8,25 @@
     </insert>
 
 
-    <select id="findAllValidTokenByUser" resultType="com.board.newb_board_server.dto.TokenDTO">
+    <select id="findAllValidTokenByUser"  parameterType="String" resultType="com.board.newb_board_server.dto.TokenDTO">
         SELECT T.FK_USERID, T.TOKEN, T.TOKEN_TYPE, T.REVOKED, T.EXPIRED FROM TBL_TOKEN T INNER JOIN TBL_USER U
-        WHERE U.USERID = #{fkUserid} AND (T.EXPIRED = 'FALSE' OR T.REVOKED = 'FALSE')
+        WHERE T.FK_USERID = #{userid} AND (T.EXPIRED = 0 OR T.REVOKED = 0)
     </select>
 
     <select id="findByToken" parameterType="String" resultType="com.board.newb_board_server.dto.TokenDTO">
         SELECT FK_USERID, TOKEN, TOKEN_TYPE, REVOKED, EXPIRED FROM TBL_TOKEN
         WHERE TOKEN = #{token}
-
     </select>
 
     <update id="updateExpiredRevoked" parameterType="java.util.List">
-        <foreach collection="list" item="item" >
-            UPDATE TBL_TOKEN
-            SET EXPIRED = #{item.expired}
-            , REVOKED = #{item.revoked}
-            WHERE FK_USERID = #{item.fkUserid}
+        UPDATE TBL_TOKEN
+        <set>
+            EXPIRED = 1,
+            REVOKED = 1
+        </set>
+        where TOKEN in
+        <foreach collection="list" item="item" separator="," open="(" close=")">
+            #{item.token}
         </foreach>
     </update>
 

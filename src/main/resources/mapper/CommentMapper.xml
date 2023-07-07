@@ -31,4 +31,7 @@
         UPDATE TBL_COMMENT SET OPEN = 'Y' WHERE COMMENT_NUM = #{commentNum}
     </update>
 
+
+
+
 </mapper>

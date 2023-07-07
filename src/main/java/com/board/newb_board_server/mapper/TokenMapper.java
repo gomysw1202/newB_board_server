@@ -14,5 +14,5 @@ public interface TokenMapper {
 
     Optional<TokenDTO> findByToken(String token);
 
-    void updateExpiredRevoked(List<TokenDTO> validUserTokens);
+    int updateExpiredRevoked(List<TokenDTO> validUserTokens);
 }

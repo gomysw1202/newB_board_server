@@ -8,22 +8,23 @@ import com.board.newb_board_server.service.AuthenticationService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins ="*", allowedHeaders = "*")
 public class AuthorizationController {
 
     private final AuthenticationService authenticationService;
 
     @PostMapping("/signUp")
-    public ResponseEntity<AuthenticationResponse> signUp(@RequestBody RegisterRequest request){
-            return ResponseEntity.ok(authenticationService.insertUser(request));
+    public ResponseEntity<AuthenticationResponse> signUp(@RequestBody RegisterRequest request) {
+        return ResponseEntity.ok(authenticationService.insertUser(request));
     }
 
 
@@ -35,10 +36,12 @@ public class AuthorizationController {
     }
 
 
-    @GetMapping("/login")
-    public ResponseEntity<String> login(@AuthenticationPrincipal UserDTO dto){
-        return ResponseEntity.ok("HELLO");
 
+
+    @GetMapping("/login")
+    public String login(){
+        log.info("여기는 겟 매핑 입니다" );
+        return "dd";
     }
 
     @PostMapping("/refresh-token")
@@ -50,8 +53,6 @@ public class AuthorizationController {
     }
 
 
-    @GetMapping("test")
-    public String test() {
-        return "hello world";
-    }
+
+
 }

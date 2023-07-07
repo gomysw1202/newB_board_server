@@ -39,4 +39,8 @@ public class BoardService {
     public int setDelYN(String boardNum) {
         return boardMapper.setDelYN(boardNum);
     }
+
+    public List<BoardDTO> getMyBoardCommentList() {
+        return boardMapper.getMyBoardCommentList();
+    }
 }

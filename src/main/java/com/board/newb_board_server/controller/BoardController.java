@@ -1,5 +1,6 @@
 package com.board.newb_board_server.controller;
 
+import com.board.newb_board_server.auth.AuthenticationRequest;
 import com.board.newb_board_server.dto.BoardDTO;
 import com.board.newb_board_server.dto.UserDTO;
 import com.board.newb_board_server.service.BoardService;
@@ -18,7 +19,6 @@ import java.util.List;
 
 
 @Slf4j
-@CrossOrigin(origins ="*", allowedHeaders = "*")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/board")
@@ -28,9 +28,9 @@ public class BoardController {
     private final BoardService boardService;
 
     @GetMapping("/list")
-    public ResponseEntity<List<BoardDTO>> getBoardList(@AuthenticationPrincipal UserDTO dto) {
+    public ResponseEntity<List<BoardDTO>> getBoardList(@RequestBody AuthenticationRequest request) {
 
-        String fkUserid = dto.getUserid();
+        String fkUserid = request.getUserid();
 
         log.info("여기는 보드 리스트 입니다~!@!~!@~!@~!@~!@~!$#~!" +fkUserid);
         return ResponseEntity.ok().body(boardService.getBoardList(fkUserid));
@@ -66,5 +66,15 @@ public class BoardController {
     public ResponseEntity<?> deleteBoard (@PathVariable("boardNum") String boardNum) {
         return ResponseEntity.ok().body(boardService.setDelYN(boardNum));
     }
+
+//    @GetMapping("/hello")
+//    public ResponseEntity<List<BoardDTO>> getMyBoardCommentList () {
+//        List<BoardDTO> boardList = boardService.getMyBoardCommentList();
+//        log.info("mappingPath boardList={}", boardList);
+//
+//        return ResponseEntity.ok().body(boardService.getMyBoardCommentList());
+//
+//    }
+
 
 }

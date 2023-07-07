@@ -1,6 +1,7 @@
 package com.board.newb_board_server.mapper;
 
 import com.board.newb_board_server.dto.BoardDTO;
+import com.board.newb_board_server.dto.CommentDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -22,5 +23,9 @@ public interface BoardMapper {
     int setDelYN(String data);
 
     int updateViews(String data);
+
+
+    // 나에게 달린 댓글 조회
+    List<BoardDTO> getMyBoardCommentList();
 
 }

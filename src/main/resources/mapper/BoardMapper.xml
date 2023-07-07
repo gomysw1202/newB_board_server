@@ -2,17 +2,31 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.board.newb_board_server.mapper.BoardMapper">
 
+
+    <resultMap id="commentList" type="com.board.newb_board_server.dto.BoardDTO">
+            <result property="boardNum" column="board_num" />
+        <collection property="comments" column="COMMENT_NUM" javaType="java.util.ArrayList" ofType="com.board.newb_board_server.dto.CommentDTO">
+            <result property="commentNum" column="COMMENT_NUM"/>
+            <result property="content" column="CONTENT" />
+            <result property="write_date" column="WRITEDATE" />
+            <result property="fk_userid" column="fkuserid" />
+        </collection>
+    </resultMap>
+
+
+
     <select id="getBoardList" parameterType="String" resultType="com.board.newb_board_server.dto.BoardDTO">
         SELECT A.BOARD_NUM, A.FK_USERID, A.TITLE, A.CONTENT, A.WRITE_DATE, A.VIEWS, A.OPEN, NVL(B.COMMENT_CNT, 0) AS COMMENT_CNT
         FROM
             (SELECT BOARD_NUM, FK_USERID, TITLE, CONTENT, WRITE_DATE, VIEWS, OPEN
             FROM TBL_BOARD
             <if test='fkUserid == null' >
-                WHERE DEL = 'N' AND ((FK_USERID = #{fkUserid} AND OPEN = 'N') OR OPEN = 'Y')) A
-            </if>
-            <if test='fkUserid != null' >
                 WHERE DEL = 'N' AND FK_USERID = #{fkUserid}) A
             </if>
+            <if test='fkUserid != null' >
+                WHERE DEL = 'N' AND ((FK_USERID = #{fkUserid} AND OPEN = 'N') OR OPEN = 'Y')) A
+            </if>
+
         LEFT JOIN
             (SELECT FK_BOARD_NUM, COUNT(COMMENT_NUM) AS COMMENT_CNT
             FROM TBL_COMMENT
@@ -40,5 +54,13 @@
         UPDATE TBL_BOARD SET VIEWS = (VIEWS+1) WHERE BOARD_NUM = #{boardNum}
     </update>
 
+
+    <select id="getMyBoardCommentList" resultMap="commentList">
+        SELECT B.BOARD_NUM,
+               C.COMMENT_NUM, C.CONTENT, C.FK_USERID, C.WRITE_DATE
+        FROM TBL_BOARD B WHERE DEL = 'N' AND
+                 INNER JOIN tbl_comment C ON B.BOARD_NUM = C.FK_BOARD_NUM
+        WHERE B.FK_USERID = 'ss' AND B.DEL = 'N'
+    </select>
 
 </mapper>

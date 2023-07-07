@@ -10,7 +10,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
-@CrossOrigin(origins ="*", allowedHeaders = "*")
 @RequiredArgsConstructor
 @RestController
 public class UserController {

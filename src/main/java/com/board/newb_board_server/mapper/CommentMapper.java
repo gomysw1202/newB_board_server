@@ -25,5 +25,6 @@ public interface CommentMapper {
 
     // open 컬럼 Y/N 변경
     int updateOpenYN(int commentNum);
+
 }
 
