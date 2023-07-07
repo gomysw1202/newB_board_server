@@ -1,8 +1,8 @@
 spring:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://localhost:3307/ld
-    username: lottodream
+    url: jdbc:mariadb://localhost:3307/newb
+    username: newb
     password: 1234
   mvc:
     hiddenmethod:

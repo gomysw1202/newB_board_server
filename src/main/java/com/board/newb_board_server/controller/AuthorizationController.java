@@ -16,26 +16,27 @@ public class AuthorizationController {
 
     @PostMapping("/signUp")
     public ResponseEntity<?> signUp(@RequestBody UserDTO dto){
-        try{
             return ResponseEntity.ok(authenticationService.insertUser(dto));
-        }catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-    }
-
-
-
-    @PostMapping("/login")
-    public ResponseEntity<?> authenticate(
-            @RequestBody UserDTO dto
-    ) {
-        return ResponseEntity.ok(authenticationService.authenticate(dto));
     }
 
 
     @GetMapping("/login")
-    public ResponseEntity<String> login(@AuthenticationPrincipal UserDTO dto){
+    public ResponseEntity<String> login(){
         return ResponseEntity.ok("HELLO");
 
     }
+
+
+    @PostMapping("/login")
+    public ResponseEntity<?> authenticate(@RequestBody UserDTO dto) {
+        return ResponseEntity.ok(authenticationService.authenticate(dto));
+    }
+
+
+//    @PostMapping("/logout")
+//    public ResponseEntity<?> logout() {
+//        return ResponseEntity.ok(authenticationService.authenticate(dto));
+//    }
+
+
 }

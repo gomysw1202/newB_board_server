@@ -17,24 +17,23 @@ public class AuthenticationService {
 
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
-    private final AuthenticationManager authenticationManager;
-    public UserDTO insertUser(UserDTO dto) {
+
+    public String insertUser(UserDTO dto) {
         var user = UserDTO.builder()
                 .userid(dto.getUserid())
                 .passwd(passwordEncoder.encode(dto.getPasswd()))
                 .email(dto.getEmail())
                 .build();
-        int result = userMapper.insertUser(user);
-        return UserDTO.builder()
-                .build();
+         userMapper.insertUser(user);
+        return "";
     }
 
     public UserDTO authenticate(UserDTO dto) {
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(dto.getUserid(),dto.getPasswd()));
         dto = userMapper.getUserDetails(dto.getUserid())
                 .orElseThrow();
         return UserDTO.builder()
                 .build();
     }
+
 
 }
