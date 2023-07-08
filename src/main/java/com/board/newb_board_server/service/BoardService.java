@@ -6,7 +6,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Service
@@ -15,8 +17,8 @@ public class BoardService {
 
     private final BoardMapper boardMapper;
     // 게시물 리스트 가져오기
-    public List<BoardDTO> getBoardList(String fkUserid) {
-        return boardMapper.getBoardList(fkUserid);
+    public List<BoardDTO> getBoardList(String userid) {
+        return boardMapper.getBoardList(userid);
     }
 
     // 게시글 상세 글 가져오기
@@ -38,5 +40,10 @@ public class BoardService {
     // 글 삭제(DEL 컬럼 값을 Y로 변경)
     public int setDelYN(String boardNum) {
         return boardMapper.setDelYN(boardNum);
+    }
+
+
+    public int openCloseContent(Map<String, String> map) {
+        return boardMapper.openCloseContent(map);
     }
 }

@@ -2,18 +2,30 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.board.newb_board_server.mapper.CommentMapper">
 
+    <resultMap id="commentList" type="com.board.newb_board_server.dto.BoardDTO">
+        <result property="boardNum" column="board_num" />
+        <collection property="comments" column="COMMENT_NUM" javaType="java.util.ArrayList" ofType="com.board.newb_board_server.dto.CommentDTO">
+            <result property="commentNum" column="COMMENT_NUM"/>
+            <result property="content" column="CONTENT" />
+            <result property="writeDate" column="WRITE_DATE" />
+            <result property="fkUserid" column="fk_userid" />
+        </collection>
+    </resultMap>
+
+
     <select id="getCommentList" parameterType="String" resultType="com.board.newb_board_server.dto.CommentDTO">
         SELECT COMMENT_NUM, FK_BOARD_NUM, CONTENT, FK_USERID, WRITE_DATE
         FROM TBL_COMMENT
         WHERE FK_BOARD_NUM = #{fkBoardNum} AND DEL = 'N'
     </select>
 
-    <select id="getCommentListByFkUserid" parameterType="String" resultType="com.board.newb_board_server.dto.CommentDTO">
-        SELECT COMMENT_NUM, FK_BOARD_NUM, CONTENT, FK_USERID, WRITE_DATE, OPEN
-        FROM TBL_COMMENT
-        WHERE FK_USERID = #{fkUserid} AND DEL = 'N'
+    <select id="getCommentListByFkUserid" parameterType="String" resultMap="commentList">
+        SELECT B.BOARD_NUM,
+               C.COMMENT_NUM, C.CONTENT, C.FK_USERID, C.WRITE_DATE
+        FROM TBL_BOARD B
+        INNER JOIN TBL_COMMENT C ON B.BOARD_NUM = C.FK_BOARD_NUM
+        WHERE B.FK_USERID = #{userid} AND B.DEL = 'N'
     </select>
-
 
     <insert id="insertComment" parameterType="com.board.newb_board_server.dto.CommentDTO">
         INSERT INTO TBL_COMMENT (COMMENT_NUM, FK_BOARD_NUM, CONTENT, FK_USERID) VALUES (nextval(seq_commentNum), #{fkBoardNum}, #{content}, #{fkUserid})

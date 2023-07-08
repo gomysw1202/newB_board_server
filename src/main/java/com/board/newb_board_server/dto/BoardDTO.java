@@ -3,6 +3,8 @@ package com.board.newb_board_server.dto;
 
 import lombok.*;
 
+import java.util.List;
+
 @Data
 public class BoardDTO {
 
@@ -17,6 +19,8 @@ public class BoardDTO {
 
     // 댓글 수를 가져오기 위한 것
     private int commentCnt;
+
+    private List<CommentDTO> comments;
 
 
 }

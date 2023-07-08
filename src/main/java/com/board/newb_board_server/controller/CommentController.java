@@ -23,15 +23,12 @@ public class CommentController {
 
     @GetMapping("/list/{fkBoardNum}")
     public ResponseEntity<List<CommentDTO>> getCommentList(@PathVariable("fkBoardNum") String fkBoardNum) {
-        log.info("mappingPath fkBoardNum={}", fkBoardNum);
         return ResponseEntity.ok().body(commentService.getCommentList(fkBoardNum));
     }
 
-
     @GetMapping("/list")
-    public ResponseEntity<List<CommentDTO>> getCommentListByFkUserid(@RequestParam @Nullable String fkUserid) {
-        log.info("mappingPath fkBoardNum={}", fkUserid);
-        return ResponseEntity.ok().body(commentService.getCommentListByFkUserid(fkUserid));
+    public ResponseEntity<List<CommentDTO>> getCommentListByFkUserid(@RequestParam String userid) {
+        return ResponseEntity.ok().body(commentService.getCommentListByFkUserid(userid));
     }
 
     @PostMapping("/write")

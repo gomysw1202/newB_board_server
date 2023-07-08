@@ -7,25 +7,26 @@
         FROM
             (SELECT BOARD_NUM, FK_USERID, TITLE, CONTENT, WRITE_DATE, VIEWS, OPEN
             FROM TBL_BOARD
-            <if test='fkUserid == null' >
-                WHERE DEL = 'N' AND ((FK_USERID = #{fkUserid} AND OPEN = 'N') OR OPEN = 'Y')) A
+            <if test='userid != ""' >
+             WHERE DEL = 'N' AND FK_USERID = #{userid}
             </if>
-            <if test='fkUserid != null' >
-                WHERE DEL = 'N' AND FK_USERID = #{fkUserid}) A
+            <if test='userid == ""' >
+             WHERE DEL = 'N' AND  OPEN = 'Y'
             </if>
-        LEFT JOIN
+        ) A
+            LEFT JOIN
             (SELECT FK_BOARD_NUM, COUNT(COMMENT_NUM) AS COMMENT_CNT
-            FROM TBL_COMMENT
+            FROM TBL_COMMENT WHERE DEL = 'N'
             GROUP BY FK_BOARD_NUM) B
         ON A.BOARD_NUM = B.FK_BOARD_NUM;
     </select>
 
     <select id="getBoardDetail" parameterType="String" resultType="com.board.newb_board_server.dto.BoardDTO">
-        SELECT BOARD_NUM, FK_USERID, TITLE, CONTENT, WRITE_DATE, VIEWS FROM TBL_BOARD WHERE BOARD_NUM = #{boardNum} AND DEL = 'N'
+        SELECT BOARD_NUM, FK_USERID, TITLE, CONTENT, WRITE_DATE, VIEWS, OPEN FROM TBL_BOARD WHERE BOARD_NUM = #{boardNum} AND DEL = 'N'
     </select>
 
     <insert id="insertBoard" parameterType="com.board.newb_board_server.dto.BoardDTO">
-        INSERT INTO TBL_BOARD (BOARD_NUM, FK_USERID, TITLE, CONTENT, WRITE_DATE, VIEWS, DEL) VALUES (nextval(seq_boardNum), 'limsw', #{title}, #{content}, default, default, 'N')
+        INSERT INTO TBL_BOARD (BOARD_NUM, FK_USERID, TITLE, CONTENT, WRITE_DATE, VIEWS, DEL) VALUES (nextval(seq_boardNum), #{fkUserid}, #{title}, #{content}, default, default, 'N')
     </insert>
 
     <update id="modifyBoard" parameterType="com.board.newb_board_server.dto.BoardDTO">
@@ -39,6 +40,11 @@
     <update id="updateViews" parameterType="String">
         UPDATE TBL_BOARD SET VIEWS = (VIEWS+1) WHERE BOARD_NUM = #{boardNum}
     </update>
+
+    <update id="openCloseContent" parameterType="java.util.HashMap">
+        UPDATE TBL_BOARD SET OPEN = #{open} WHERE BOARD_NUM = #{boardNum}
+    </update>
+
 
 
 </mapper>

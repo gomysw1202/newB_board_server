@@ -19,8 +19,8 @@ public class CommentService {
         return commentMapper.getCommentList(fkBoardNum);
     }
 
-    public List<CommentDTO> getCommentListByFkUserid(String fkUserid) {
-        return commentMapper.getCommentListByFkUserid(fkUserid);
+    public List<CommentDTO> getCommentListByFkUserid(String userid) {
+        return commentMapper.getCommentListByFkUserid(userid);
     }
 
     public int insertComment(CommentDTO dto) {

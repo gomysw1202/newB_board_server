@@ -11,7 +11,7 @@ public interface CommentMapper {
     // 게시물에 달린 댓글 가져오기
     List<CommentDTO> getCommentList(String fkBoardNum);
     // 내 댓글 가져오기
-    List<CommentDTO> getCommentListByFkUserid(String fkUserid);
+    List<CommentDTO> getCommentListByFkUserid(String userid);
 
     // 댓글 작성
     int insertComment(CommentDTO dto);

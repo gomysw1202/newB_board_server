@@ -3,12 +3,14 @@ package com.board.newb_board_server.mapper;
 import com.board.newb_board_server.dto.BoardDTO;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Mapper
 public interface BoardMapper {
-    List<BoardDTO> getBoardList(String fkUserid);
+    List<BoardDTO> getBoardList(String userid);
 
     BoardDTO getBoardDetail(String data);
 
@@ -23,4 +25,5 @@ public interface BoardMapper {
 
     int updateViews(String data);
 
+    int openCloseContent(Map<String, String> map);
 }
