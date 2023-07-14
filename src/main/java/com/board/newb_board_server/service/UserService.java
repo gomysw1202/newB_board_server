@@ -15,20 +15,4 @@ public class UserService {
 
     private final UserMapper userMapper;
 
-
-    public boolean isExistUserid(String userid) {
-        boolean result = userMapper.isExistUserid(userid);
-        return userMapper.isExistUserid(userid);
-    }
-
-//    public int insertUser(UserDTO dto) {
-////        dto = dto.EncodePasswd(passwordEncoder);
-//
-//        return userMapper.insertUser(dto);
-//    }
-//
-//    public Optional<UserDTO> getUserDetails(String userid) {
-//
-//        return userMapper.getUserDetails(userid);
-//    }
 }

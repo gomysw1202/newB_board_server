@@ -22,6 +22,11 @@ public class AuthorizationController {
 
     private final AuthenticationService authenticationService;
 
+    @GetMapping("/idDuplicateCheck")
+    public ResponseEntity<?> idDuplicateCheck(@RequestParam String userid) {
+        return ResponseEntity.ok(authenticationService.idDuplicateCheck(userid));
+    }
+
     @PostMapping("/signUp")
     public ResponseEntity<AuthenticationResponse> signUp(@RequestBody RegisterRequest request) {
         return ResponseEntity.ok(authenticationService.insertUser(request));

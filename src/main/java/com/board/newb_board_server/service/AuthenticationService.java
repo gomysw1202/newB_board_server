@@ -32,6 +32,13 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
+
+
+    public boolean idDuplicateCheck(String userid) {
+        return userMapper.idDuplicateCheck(userid);
+    }
+
+
     public AuthenticationResponse insertUser(RegisterRequest request) {
         var user = UserDTO.builder()
                 .userid(request.getUserid())

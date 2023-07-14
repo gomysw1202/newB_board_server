@@ -3,9 +3,10 @@
 <mapper namespace="com.board.newb_board_server.mapper.UserMapper">
 
 
-    <select id="isExistUserid" parameterType="String" resultType="boolean">
+    <select id="idDuplicateCheck" parameterType="String" resultType="boolean">
         SELECT if(count(*) = 1,1,0) FROM TBL_USER WHERE USERID = #{userid}
     </select>
+
 
     <insert id="insertUser" parameterType="com.board.newb_board_server.dto.UserDTO">
             INSERT INTO TBL_USER (USERID, PASSWD, EMAIL, JOIN_DATE, DEL ) VALUE (#{userid}, #{passwd}, #{email}, default, 'N')

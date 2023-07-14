@@ -9,7 +9,7 @@ import java.util.Optional;
 @Mapper
 public interface UserMapper {
     // userid로 user 존재유무 확인하기
-    boolean isExistUserid(String userid);
+    boolean idDuplicateCheck(String userid);
 
     // 회원가입시 정보 입력하기
     UserDTO insertUser(UserDTO dto);

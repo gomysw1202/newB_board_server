@@ -17,12 +17,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/checkIdDuplicate")
-    public ResponseEntity<?> checkIdDuplicate(@RequestBody UserDTO dto) {
-        return  ResponseEntity.ok(userService.isExistUserid(dto.getUserid()));
-    }
-
-
 
     @GetMapping("/main")
     public ResponseEntity<String> mainPage(@AuthenticationPrincipal UserDTO dto) {

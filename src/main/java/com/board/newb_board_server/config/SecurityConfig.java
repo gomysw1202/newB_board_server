@@ -37,7 +37,7 @@ public class SecurityConfig {
                 .cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.disable())
                 .authorizeHttpRequests(request -> request
                                 .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
-                                .requestMatchers("/status", "/images/**", "/login", "/signUp").permitAll()
+                                .requestMatchers("/status", "/images/**", "/login", "/signUp", "/idDuplicateCheck").permitAll()
                                 .anyRequest()
 //                                .anonymous() // 일단 테스트라서 어노니머스로 설정해놓음
                                 .authenticated()	// 어떠한 요청이라도 인증필요
